@@ -1,24 +1,31 @@
-# chord_p2p
+# Chord P2P Project (Gleam + Actors)
 
-[![Package Version](https://img.shields.io/hexpm/v/chord_p2p)](https://hex.pm/packages/chord_p2p)
-[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/chord_p2p/)
+## Team members
+- **Ashmit Sharma** — [UFID/2838-1009]
+- **Yash Chaudhari** — [UFID/2260-3734]
 
-```sh
-gleam add chord_p2p@1
-```
-```gleam
-import chord_p2p
+---
 
-pub fn main() -> Nil {
-  // TODO: An example of the project in use
-}
-```
+## What is working
+- **Chord protocol with actors:** One **Gleam** actor per peer on the Erlang/BEAM VM. Peers form a logical ring and communicate only via messages.
+- **Scalable lookups:** Nodes maintain **finger tables** and route using `FindSuccessor`, forwarding to the **closest preceding finger** (or successor) until the responsible node is reached.
+- **Stabilization loop:** Periodic **Stabilize**, **Notify**, **CheckPredecessor**, and **FixFingers** keep successor/predecessor pointers and fingers up to date.
+- **Consistent hashing (SHA-1):** Strings are hashed with **SHA-1** and mapped into a **10-bit** identifier space (`0..1023`) used by the simulation.
+- **Simulation & metrics:** After lookups, the program prints **total lookups**, **average hops**, the theoretical **½·log₂(N)**, and the **difference**.
+- **Clean run + shutdown:** Simple CLI and graceful actor shutdown at the end of a run.
 
-Further documentation can be found at <https://hexdocs.pm/chord_p2p>.
+---
 
-## Development
+## The largest network we managed to deal with
+- **Nodes:** **400**  
+- **Requests per node:** **2**  
+- **Observed behavior:** We observed an average of **4.45** hops, while the expected average based on **½·log₂N** (which is **O(log N)**) is **≈ 4.321** for **N = 400**. 
 
-```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-```
+## How to run
+```bash
+gleam run <numNodes> <numRequests>
+
+# examples
+gleam run 10 5
+gleam run 100 5
+gleam run 200 2
