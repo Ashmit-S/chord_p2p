@@ -1,8 +1,8 @@
 # Chord P2P Project (Gleam + Actors)
 
 ## Team members
-- **Ashmit Sharma** — [UFID/2838-1009]
-- **Yash Chaudhari** — [UFID/2260-3734]
+- **Ashmit Sharma** — [UFID: 2838-1009]
+- **Yash Chaudhari** — [UFID: 2260-3734]
 
 ---
 
@@ -10,7 +10,7 @@
 - **Chord protocol with actors:** One **Gleam** actor per peer on the Erlang/BEAM VM. Peers form a logical ring and communicate only via messages.
 - **Scalable lookups:** Nodes maintain **finger tables** and route using `FindSuccessor`, forwarding to the **closest preceding finger** (or successor) until the responsible node is reached.
 - **Stabilization loop:** Periodic **Stabilize**, **Notify**, **CheckPredecessor**, and **FixFingers** keep successor/predecessor pointers and fingers up to date.
-- **Consistent hashing (SHA-1):** Strings are hashed with **SHA-1** and mapped into a **10-bit** identifier space (`0..1023`) used by the simulation.
+- **Consistent hashing (SHA-1):** Strings are hashed with **SHA-1** and mapped into a **12-bit** identifier space (`0..4095`) used by the simulation.
 - **Simulation & metrics:** After lookups, the program prints **total lookups**, **average hops**, the theoretical **½·log₂(N)**, and the **difference**.
 - **Clean run + shutdown:** Simple CLI and graceful actor shutdown at the end of a run.
 
